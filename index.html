@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -36,7 +38,6 @@
   }
   .mono{font-family:'Space Mono',monospace}
 
-  /* Video background mejorado */
   .video-background{
     position:fixed;
     top:0;
@@ -382,7 +383,7 @@
 <body>
 
 <div class="video-background">
-  <video id="bgVideo" muted playsinline preload="auto">
+  <video id="bgVideo" muted loop playsinline autoplay webkit-playsinline>
     <source src="https://res.cloudinary.com/drfuqffoh/video/upload/0627_gxkzfx.mp4" type="video/mp4">
   </video>
 </div>
@@ -879,68 +880,48 @@
 </a>
 
 <script>
-  // Video scrubbing mejorado
+  // ============================================
+  // VIDEO EN LOOP AUTOMÁTICO
+  // ============================================
   const video = document.getElementById('bgVideo');
-  let videoDuration = 0;
-  let isVideoReady = false;
-  let lastScrollY = 0;
-
+  
+  // Asegurar autoplay con loop nativo
+  video.loop = true;
+  video.muted = true;
+  video.playsInline = true;
+  
+  // Forzar play si el navegador lo permite
   video.addEventListener('loadedmetadata', () => {
-    videoDuration = video.duration;
-    isVideoReady = true;
-    console.log('Video duration:', videoDuration);
+    video.play().catch(e => {
+      console.log('Autoplay prevented:', e);
+    });
+  });
+  
+  // Reanudar si se pausa (algunos navegadores móviles pausan al hacer scroll)
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && video.paused) {
+      video.play().catch(() => {});
+    }
   });
 
-  video.addEventListener('canplay', () => {
-    if (!isVideoReady) {
-      videoDuration = video.duration;
-      isVideoReady = true;
-    }
-  });
-
-  video.load();
-
-  let ticking = false;
-  function updateVideoOnScroll() {
-    if (!isVideoReady || !videoDuration) return;
-    
-    const scrollY = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollProgress = Math.min(Math.max(scrollY / docHeight, 0), 1);
-    
-    const targetTime = scrollProgress * videoDuration;
-    
-    // Suavizar el cambio de tiempo
-    const currentTimeDiff = Math.abs(video.currentTime - targetTime);
-    if (currentTimeDiff > 0.05) {
-      // Interpolar para movimiento más suave
-      const smoothTime = video.currentTime + (targetTime - video.currentTime) * 0.3;
-      video.currentTime = smoothTime;
-    }
-    
-    lastScrollY = scrollY;
-    ticking = false;
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(updateVideoOnScroll);
-      ticking = true;
-    }
-  }, { passive: true });
-
-  // Matrix rain
+  // ============================================
+  // MATRIX RAIN OPTIMIZADO
+  // ============================================
   const canvas = document.getElementById('matrixCanvas');
-  const ctx = canvas.getContext('2d');
+  const ctx = canvas.getContext('2d', { alpha: true });
   let width, height, columns, drops;
   const fontSize = 14;
   const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+  const charArray = chars.split('');
+  let lastMatrixTime = 0;
+  const MATRIX_FPS = 30;
+  const MATRIX_INTERVAL = 1000 / MATRIX_FPS;
   
   function resizeCanvas() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     columns = Math.floor(width / fontSize);
-    drops = [];
+    drops = new Array(columns);
     for (let i = 0; i < columns; i++) {
       drops[i] = Math.random() * -100;
     }
@@ -948,32 +929,52 @@
   resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
   
-  function drawMatrix() {
+  function drawMatrix(timestamp) {
+    if (timestamp - lastMatrixTime < MATRIX_INTERVAL) {
+      requestAnimationFrame(drawMatrix);
+      return;
+    }
+    lastMatrixTime = timestamp;
+    
     ctx.fillStyle = 'rgba(2, 4, 10, 0.08)';
     ctx.fillRect(0, 0, width, height);
     ctx.font = fontSize + 'px monospace';
-    for (let i = 0; i < drops.length; i++) {
-      const text = chars[Math.floor(Math.random() * chars.length)];
-      const gradient = ctx.createLinearGradient(0, drops[i] * fontSize - 100, 0, drops[i] * fontSize);
-      gradient.addColorStop(0, 'rgba(123, 47, 247, 0)');
-      gradient.addColorStop(0.5, 'rgba(123, 47, 247, 0.3)');
-      gradient.addColorStop(1, 'rgba(0, 255, 157, 0.5)');
-      ctx.fillStyle = gradient;
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > height && Math.random() > 0.975) {
+    
+    for (let i = 0; i < columns; i++) {
+      const text = charArray[Math.floor(Math.random() * charArray.length)];
+      const y = drops[i] * fontSize;
+      
+      ctx.fillStyle = 'rgba(0, 255, 157, 0.5)';
+      ctx.fillText(text, i * fontSize, y);
+      
+      if (y > height && Math.random() > 0.975) {
         drops[i] = 0;
       }
       drops[i] += 0.5;
     }
+    requestAnimationFrame(drawMatrix);
   }
-  setInterval(drawMatrix, 80);
+  requestAnimationFrame(drawMatrix);
 
+  // ============================================
+  // NAV SCROLL
+  // ============================================
   const nav = document.getElementById('nav');
+  let navTicking = false;
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 50) nav.classList.add('scrolled');
-    else nav.classList.remove('scrolled');
-  });
+    if (!navTicking) {
+      requestAnimationFrame(() => {
+        if (window.scrollY > 50) nav.classList.add('scrolled');
+        else nav.classList.remove('scrolled');
+        navTicking = false;
+      });
+      navTicking = true;
+    }
+  }, { passive: true });
 
+  // ============================================
+  // MOBILE MENU
+  // ============================================
   const burger = document.getElementById('burger');
   const mobileMenu = document.getElementById('mobileMenu');
   const overlay = document.getElementById('overlay');
@@ -987,6 +988,9 @@
   overlay.addEventListener('click', toggleMenu);
   document.querySelectorAll('.mobile-menu a').forEach(a => a.addEventListener('click', toggleMenu));
 
+  // ============================================
+  // ELECTRIC REVEAL
+  // ============================================
   const electricObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -999,6 +1003,9 @@
     electricObserver.observe(el);
   });
 
+  // ============================================
+  // 3D TILT (solo desktop)
+  // ============================================
   if (window.matchMedia('(hover: hover)').matches) {
     document.querySelectorAll('.service-card').forEach(card => {
       card.addEventListener('mousemove', e => {
@@ -1017,6 +1024,4 @@
 </script>
 </body>
 </html>
-
-
 
