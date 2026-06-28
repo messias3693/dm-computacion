@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -384,316 +382,122 @@
   .brand-item:hover{opacity:1;filter:grayscale(0%) brightness(1);transform:scale(1.2)}
   .brand-item svg{height:36px;width:auto}
 
-  /* ===== ORBITAL SECTION CON F1 SPEEDOMETER ===== */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  
-  .orbital-container{
+  /* ===== SECCIÓN SOBRE NOSOTROS REDISEÑADA ===== */
+  .about-section{
     position:relative;
-    aspect-ratio:1;
-    max-width:500px;
-    margin:0 auto;
-    width:100%;
-  }
-  
-  .orbital-bg{
-    position:absolute;
-    inset:0;
-    background-image: 
-      radial-gradient(circle at 50% 50%, rgba(123,47,247,0.08) 0%, transparent 70%),
-      repeating-linear-gradient(0deg, transparent, transparent 49px, rgba(0,255,157,0.05) 50px),
-      repeating-linear-gradient(90deg, transparent, transparent 49px, rgba(0,255,157,0.05) 50px);
-    border-radius:50%;
-    animation:rotateBg 60s linear infinite;
-  }
-  @keyframes rotateBg{to{transform:rotate(360deg)}}
-  
-  .orbit-ring{
-    position:absolute;
-    border-radius:50%;
-    border:1px solid rgba(123,47,247,0.3);
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-  }
-  .orbit-ring.r1{width:35%;height:35%;border-color:rgba(0,255,157,0.4);border-style:dashed;animation:spin 20s linear infinite}
-  .orbit-ring.r2{width:60%;height:60%;border-color:rgba(123,47,247,0.3);animation:spin 30s linear infinite reverse}
-  .orbit-ring.r3{width:85%;height:85%;border-color:rgba(168,85,247,0.2);border-style:dotted;animation:spin 40s linear infinite}
-  @keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}
-  
-  /* ===== F1 SPEEDOMETER / VELOCÍMETRO ===== */
-  .speedometer{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:220px;
-    height:220px;
-    z-index:10;
-  }
-  
-  /* Anillo exterior con marcas de velocidad */
-  .speed-ring{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    border:3px solid transparent;
-  }
-  .speed-ring.outer{
-    width:100%;
-    height:100%;
-    border-color:rgba(0,255,157,0.3);
-    border-top-color:var(--cyan);
-    border-right-color:var(--cyan);
-    animation:rotateSpeed 4s linear infinite;
-    box-shadow:0 0 30px rgba(0,255,157,0.4), inset 0 0 20px rgba(0,255,157,0.2);
-  }
-  .speed-ring.middle{
-    width:85%;
-    height:85%;
-    border-color:rgba(123,47,247,0.3);
-    border-bottom-color:var(--purple-soft);
-    border-left-color:var(--purple-soft);
-    animation:rotateSpeed 3s linear infinite reverse;
-    box-shadow:0 0 20px rgba(123,47,247,0.4);
-  }
-  .speed-ring.inner{
-    width:70%;
-    height:70%;
-    border-color:rgba(94,255,200,0.3);
-    border-top-color:var(--cyan-soft);
-    border-left-color:var(--cyan-soft);
-    animation:rotateSpeed 2s linear infinite;
-  }
-  
-  @keyframes rotateSpeed{
-    to{transform:translate(-50%,-50%) rotate(360deg)}
-  }
-  
-  /* Centro del velocímetro */
-  .speed-center{
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:140px;
-    height:140px;
-    background:radial-gradient(circle at 30% 30%, #1a1040, #050210);
-    border-radius:50%;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    box-shadow:
-      0 0 40px rgba(0,255,157,0.5),
-      0 0 80px rgba(123,47,247,0.3),
-      inset 0 0 30px rgba(0,255,157,0.2);
+    padding:100px 24px;
     overflow:hidden;
-    animation:centerPulse 2s ease-in-out infinite;
   }
   
-  @keyframes centerPulse{
-    0%,100%{
-      box-shadow:0 0 40px rgba(0,255,157,0.5), 0 0 80px rgba(123,47,247,0.3), inset 0 0 30px rgba(0,255,157,0.2);
-    }
-    50%{
-      box-shadow:0 0 60px rgba(0,255,157,0.7), 0 0 100px rgba(123,47,247,0.5), inset 0 0 40px rgba(0,255,157,0.3);
-    }
+  .about-header{
+    max-width:1400px;
+    margin:0 auto 60px;
+    text-align:center;
   }
   
-  /* Líneas de velocidad animadas en el centro */
-  .speed-center::before{
+  .about-header .section-title{
+    margin-bottom:12px;
+  }
+  
+  .about-header .section-subtitle{
+    margin:0 auto;
+    max-width:700px;
+  }
+
+  /* Carrusel de servicios con JS */
+  .services-carousel-container{
+    max-width:1400px;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+    padding:20px 0;
+  }
+  
+  .services-carousel-container::before,
+  .services-carousel-container::after{
     content:'';
     position:absolute;
     top:0;
-    left:-100%;
-    width:100%;
-    height:100%;
-    background:linear-gradient(90deg, transparent, rgba(0,255,157,0.2), transparent);
-    animation:speedLines 2s linear infinite;
-  }
-  
-  @keyframes speedLines{
-    0%{left:-100%}
-    100%{left:100%}
-  }
-  
-  .speed-number{
-    font-family:'Space Mono',monospace;
-    font-size:52px;
-    font-weight:900;
-    color:var(--cyan);
-    line-height:1;
-    text-shadow:0 0 20px rgba(0,255,157,0.8), 0 0 40px rgba(0,255,157,0.4);
-    position:relative;
-    z-index:2;
-    letter-spacing:-2px;
-  }
-  
-  .speed-label{
-    font-family:'Space Mono',monospace;
-    font-size:9px;
-    color:var(--cream);
-    letter-spacing:2px;
-    margin-top:6px;
-    font-weight:700;
-    text-shadow:0 0 10px rgba(224,242,254,0.5);
-    position:relative;
-    z-index:2;
-  }
-  
-  .speed-unit{
-    font-family:'Space Mono',monospace;
-    font-size:10px;
-    color:var(--cyan-soft);
-    letter-spacing:1px;
-    margin-top:2px;
-    position:relative;
-    z-index:2;
-  }
-  
-  /* Auto F1 estilizado */
-  .f1-car{
-    position:absolute;
-    bottom:-30px;
-    left:50%;
-    transform:translateX(-50%);
-    width:80px;
-    height:24px;
-    z-index:11;
-  }
-  .f1-car svg{
-    width:100%;
-    height:100%;
-    filter:drop-shadow(0 0 10px var(--cyan));
-  }
-  
-  /* Líneas de velocidad detrás del auto */
-  .speed-lines{
-    position:absolute;
-    bottom:-20px;
-    left:50%;
-    transform:translateX(-50%);
-    width:120px;
-    height:20px;
+    bottom:0;
+    width:100px;
     z-index:10;
+    pointer-events:none;
+  }
+  
+  .services-carousel-container::before{
+    left:0;
+    background:linear-gradient(to right, var(--bg) 0%, transparent 100%);
+  }
+  
+  .services-carousel-container::after{
+    right:0;
+    background:linear-gradient(to left, var(--bg) 0%, transparent 100%);
+  }
+  
+  .services-carousel-track{
+    display:flex;
+    gap:24px;
+    width:max-content;
+    will-change:transform;
+  }
+  
+  .services-carousel-item{
+    flex:0 0 auto;
+    width:240px;
+    aspect-ratio:1/1;
+    position:relative;
     overflow:hidden;
-  }
-  .speed-line{
-    position:absolute;
-    height:2px;
-    background:linear-gradient(90deg, transparent, var(--cyan), transparent);
-    animation:speedLineMove 1s linear infinite;
-  }
-  .speed-line:nth-child(1){top:4px;left:0;width:40px;animation-delay:0s}
-  .speed-line:nth-child(2){top:10px;left:20px;width:60px;animation-delay:0.2s}
-  .speed-line:nth-child(3){top:16px;left:10px;width:50px;animation-delay:0.4s}
-  
-  @keyframes speedLineMove{
-    0%{transform:translateX(-100%);opacity:0}
-    50%{opacity:1}
-    100%{transform:translateX(100%);opacity:0}
-  }
-  
-  /* Checkered flag pattern */
-  .checkered{
-    position:absolute;
-    top:10px;
-    right:10px;
-    width:30px;
-    height:30px;
-    background-image: 
-      linear-gradient(45deg, var(--cream) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--cream) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--cream) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--cream) 75%);
-    background-size:10px 10px;
-    background-position:0 0, 0 5px, 5px -5px, -5px 0px;
-    opacity:0.6;
-    z-index:11;
-    animation:checkeredWave 2s ease-in-out infinite;
-  }
-  
-  @keyframes checkeredWave{
-    0%,100%{opacity:0.4;transform:scale(1)}
-    50%{opacity:0.8;transform:scale(1.1)}
-  }
-  
-  .orbit-node{
-    position:absolute;
-    top:50%;left:50%;
-    width:60px;height:60px;
-    transform-origin:0 0;
-    cursor:none;
-    z-index:5;
-  }
-  .orbit-node .node-content{
-    position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,-50%);
-    width:60px;height:60px;
-    background:linear-gradient(135deg,var(--bg-2),var(--panel));
-    border:2px solid var(--purple);
-    border-radius:50%;
-    display:grid;
-    place-items:center;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:linear-gradient(135deg,rgba(15,21,53,0.9),rgba(5,8,24,0.8));
     transition:all 0.4s cubic-bezier(.2,.8,.2,1);
-    box-shadow:0 0 20px rgba(123,47,247,0.4);
-  }
-  .orbit-node .node-content svg{
-    width:24px;height:24px;
-    stroke:var(--cyan);
-    fill:none;
-    stroke-width:2;
-    stroke-linecap:round;
-    stroke-linejoin:round;
-    transition:all 0.3s;
-  }
-  .orbit-node:hover .node-content{
-    transform:translate(-50%,-50%) scale(1.3);
-    border-color:var(--cyan);
-    box-shadow:0 0 40px rgba(0,255,157,0.6);
-    background:linear-gradient(135deg,var(--purple),var(--cyan));
-  }
-  .orbit-node:hover .node-content svg{
-    stroke:var(--bg);
   }
   
-  .orbit-node .node-label{
+  .services-carousel-item:hover{
+    border-color:var(--cyan);
+    box-shadow:0 0 40px rgba(0,255,157,0.4);
+    transform:scale(1.05);
+  }
+  
+  .services-carousel-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:all 0.6s;
+  }
+  
+  .services-carousel-item:hover img{
+    transform:scale(1.15);
+    filter:brightness(0.7);
+  }
+  
+  .services-carousel-overlay{
     position:absolute;
-    top:50%;left:50%;
-    transform:translate(-50%,calc(-50% + 45px));
+    bottom:0;
+    left:0;
+    right:0;
+    padding:24px 18px 18px;
+    background:linear-gradient(to top, rgba(2,4,10,0.98) 0%, rgba(2,4,10,0.7) 60%, transparent 100%);
+    z-index:2;
+  }
+  
+  .services-carousel-title{
+    font-family:'Space Mono',monospace;
+    font-size:15px;
+    font-weight:700;
+    color:var(--cyan);
+    text-shadow:0 0 12px rgba(0,255,157,0.6);
+    margin-bottom:4px;
+  }
+  
+  .services-carousel-subtitle{
     font-family:'Space Mono',monospace;
     font-size:10px;
-    color:var(--cyan);
-    letter-spacing:1px;
+    color:var(--cream);
+    letter-spacing:1.5px;
     text-transform:uppercase;
-    white-space:nowrap;
-    opacity:0;
-    transition:all 0.3s;
-    pointer-events:none;
-    text-shadow:0 0 10px rgba(0,255,157,0.5);
+    opacity:0.85;
   }
-  .orbit-node:hover .node-label{
-    opacity:1;
-    transform:translate(-50%,calc(-50% + 50px));
-  }
-  
-  .orbit-node.n1{animation:orbit1 15s linear infinite}
-  .orbit-node.n2{animation:orbit2 20s linear infinite reverse}
-  .orbit-node.n3{animation:orbit3 25s linear infinite}
-  .orbit-node.n4{animation:orbit4 18s linear infinite reverse}
-  .orbit-node.n5{animation:orbit5 22s linear infinite}
-  .orbit-node.n6{animation:orbit6 28s linear infinite reverse}
-  
-  @keyframes orbit1{from{transform:rotate(0deg) translateX(17.5%) rotate(0deg)}to{transform:rotate(360deg) translateX(17.5%) rotate(-360deg)}}
-  @keyframes orbit2{from{transform:rotate(0deg) translateX(30%) rotate(0deg)}to{transform:rotate(-360deg) translateX(30%) rotate(360deg)}}
-  @keyframes orbit3{from{transform:rotate(0deg) translateX(42.5%) rotate(0deg)}to{transform:rotate(360deg) translateX(42.5%) rotate(-360deg)}}
-  @keyframes orbit4{from{transform:rotate(0deg) translateX(17.5%) rotate(0deg)}to{transform:rotate(-360deg) translateX(17.5%) rotate(360deg)}}
-  @keyframes orbit5{from{transform:rotate(0deg) translateX(30%) rotate(0deg)}to{transform:rotate(360deg) translateX(30%) rotate(-360deg)}}
-  @keyframes orbit6{from{transform:rotate(0deg) translateX(42.5%) rotate(0deg)}to{transform:rotate(-360deg) translateX(42.5%) rotate(360deg)}}
-  
-  .orbital-container:hover .orbit-node{animation-play-state:paused}
 
   .about-text h3{font-size:clamp(24px,3vw,36px);margin-bottom:16px;line-height:1.15;font-weight:700}
   .about-text h3 .accent{background:linear-gradient(135deg,var(--cyan),var(--purple-soft));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
@@ -821,17 +625,10 @@
     .stat .num{font-size:20px}
     .corner{display:none}
     section{padding:60px 20px}
-    .about-grid{grid-template-columns:1fr;gap:32px}
     .contact-main,.contact-address-section{grid-template-columns:1fr}
     .footer-grid{grid-template-columns:1fr 1fr;gap:24px}
     .footer-bottom{flex-direction:column;gap:10px;text-align:center}
-    .orbital-container{max-width:400px}
-    .orbit-node{width:50px;height:50px}
-    .orbit-node .node-content{width:50px;height:50px}
-    .orbit-node .node-content svg{width:20px;height:20px}
-    .speedometer{width:180px;height:180px}
-    .speed-center{width:115px;height:115px}
-    .speed-number{font-size:42px}
+    .services-carousel-item{width:200px}
     body{cursor:auto}
     .cursor-dot,.cursor-ring,#cursorTrail{display:none}
     *{cursor:auto !important}
@@ -866,15 +663,9 @@
     .section-tag .dot{width:4px;height:4px}
     .address-card{padding:20px}
     .address-card .addr-text{font-size:14px}
-    .orbital-container{max-width:320px}
-    .orbit-node{width:44px;height:44px}
-    .orbit-node .node-content{width:44px;height:44px}
-    .orbit-node .node-content svg{width:18px;height:18px}
-    .speedometer{width:160px;height:160px}
-    .speed-center{width:100px;height:100px}
-    .speed-number{font-size:36px}
-    .speed-label{font-size:8px}
-    .f1-car{width:60px;bottom:-25px}
+    .services-carousel-item{width:180px}
+    .services-carousel-title{font-size:13px}
+    .services-carousel-subtitle{font-size:9px}
   }
 
   .mobile-menu{position:fixed;top:0;right:-100%;width:80%;max-width:300px;height:100vh;background:rgba(2,4,10,0.97);backdrop-filter:blur(20px);border-left:1px solid var(--border);padding:80px 24px 24px;transition:right 0.4s cubic-bezier(.2,.8,.2,1);z-index:99}
@@ -1077,120 +868,24 @@
     </div>
   </section>
 
-  <section id="nosotros">
-    <div class="section-inner">
-      <div class="electric-reveal">
-        <div class="section-tag"><span class="dot"></span> Sobre Nosotros</div>
-        <h2 class="section-title">35 años de <span class="accent">experiencia real</span></h2>
-        <p class="section-subtitle">Conocemos cada cliente por su nombre y cada problema por su solución. Pasa el mouse sobre los nodos para explorar nuestras especialidades.</p>
-      </div>
+  <!-- SECCIÓN SOBRE NOSOTROS REDISEÑADA -->
+  <section class="about-section" id="nosotros">
+    <div class="about-header electric-reveal">
+      <div class="section-tag"><span class="dot"></span> Sobre Nosotros</div>
+      <h2 class="section-title">35 años de <span class="accent">experiencia real</span></h2>
+      <p class="section-subtitle">Desde 1993 acompañando a hogares y empresas en su evolución tecnológica.</p>
+    </div>
 
-      <div class="about-grid">
-        <div class="orbital-container electric-reveal">
-          <div class="orbital-bg"></div>
-          
-          <div class="orbit-ring r1"></div>
-          <div class="orbit-ring r2"></div>
-          <div class="orbit-ring r3"></div>
-          
-          <!-- VELOCÍMETRO F1 -->
-          <div class="speedometer">
-            <div class="speed-ring outer"></div>
-            <div class="speed-ring middle"></div>
-            <div class="speed-ring inner"></div>
-            
-            <div class="speed-center">
-              <div class="speed-number">35+</div>
-              <div class="speed-label">AÑOS</div>
-              <div class="speed-unit">DE VELOCIDAD</div>
-            </div>
-            
-            <!-- Bandera a cuadros -->
-            <div class="checkered"></div>
-            
-            <!-- Auto F1 -->
-            <div class="f1-car">
-              <svg viewBox="0 0 80 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Cuerpo del auto -->
-                <path d="M5 18 L15 18 L20 12 L35 10 L50 10 L60 12 L70 14 L75 18 L75 20 L5 20 Z" fill="var(--cyan)" stroke="var(--cyan)" stroke-width="1"/>
-                <!-- Cabina -->
-                <path d="M25 12 L30 6 L45 6 L50 12 Z" fill="var(--purple-soft)" stroke="var(--purple-soft)" stroke-width="1"/>
-                <!-- Alerón trasero -->
-                <rect x="2" y="10" width="6" height="10" fill="var(--cream)" opacity="0.8"/>
-                <!-- Alerón delantero -->
-                <rect x="72" y="14" width="6" height="6" fill="var(--cream)" opacity="0.8"/>
-                <!-- Rueda trasera -->
-                <circle cx="18" cy="20" r="5" fill="var(--bg)" stroke="var(--cyan)" stroke-width="1.5"/>
-                <!-- Rueda delantera -->
-                <circle cx="62" cy="20" r="5" fill="var(--bg)" stroke="var(--cyan)" stroke-width="1.5"/>
-                <!-- Detalles -->
-                <line x1="35" y1="10" x2="35" y2="18" stroke="var(--bg)" stroke-width="0.5" opacity="0.5"/>
-                <line x1="50" y1="10" x2="50" y2="18" stroke="var(--bg)" stroke-width="0.5" opacity="0.5"/>
-              </svg>
-            </div>
-            
-            <!-- Líneas de velocidad -->
-            <div class="speed-lines">
-              <div class="speed-line"></div>
-              <div class="speed-line"></div>
-              <div class="speed-line"></div>
-            </div>
-          </div>
-          
-          <div class="orbit-node n1">
-            <div class="node-content">
-              <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-            </div>
-            <div class="node-label">Domótica</div>
-          </div>
-          
-          <div class="orbit-node n2">
-            <div class="node-content">
-              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-            </div>
-            <div class="node-label">Redes</div>
-          </div>
-          
-          <div class="orbit-node n3">
-            <div class="node-content">
-              <svg viewBox="0 0 24 24"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
-            </div>
-            <div class="node-label">Nube</div>
-          </div>
-          
-          <div class="orbit-node n4">
-            <div class="node-content">
-              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
-            <div class="node-label">Seguridad</div>
-          </div>
-          
-          <div class="orbit-node n5">
-            <div class="node-content">
-              <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>
-            </div>
-            <div class="node-label">IoT</div>
-          </div>
-          
-          <div class="orbit-node n6">
-            <div class="node-content">
-              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="node-label">Soporte</div>
-          </div>
-        </div>
-        
-        <div class="about-text electric-reveal">
-          <h3>No somos una startup. Somos los que <span class="accent">siempre estuvieron</span>.</h3>
-          <p>En un mundo donde todo cambia cada seis meses, nosotros apostamos por <span class="hl">la experiencia, la cercanía y la palabra empeñada</span>.</p>
-          <p>Desde 1993 hemos acompañado a cientos de familias y empresas en su evolución tecnológica. Empezamos con un destornillador y un disquete de Windows 3.1, y hoy seguimos con el mismo espíritu, con mejores herramientas.</p>
-          <div class="about-stats">
-            <div class="a-stat"><div class="n">35+</div><div class="l">Años</div></div>
-            <div class="a-stat"><div class="n">15K</div><div class="l">Equipos</div></div>
-            <div class="a-stat"><div class="n">500+</div><div class="l">Clientes</div></div>
-          </div>
-        </div>
+    <div class="services-carousel-container" id="servicesCarousel">
+      <div class="services-carousel-track" id="carouselTrack">
+        <!-- Las tarjetas se generan por JS para loop infinito perfecto -->
       </div>
+    </div>
+
+    <div class="about-stats electric-reveal" style="max-width:600px;margin:60px auto 0;">
+      <div class="a-stat"><div class="n">35+</div><div class="l">Años</div></div>
+      <div class="a-stat"><div class="n">15K</div><div class="l">Equipos</div></div>
+      <div class="a-stat"><div class="n">500+</div><div class="l">Clientes</div></div>
     </div>
   </section>
 
@@ -1521,7 +1216,7 @@
   }
   animateCursor();
 
-  document.querySelectorAll('a,button,.service-card,.contact-item,.tab-btn,.brand-item,.a-stat,.showcase-item,.orbit-node').forEach(el => {
+  document.querySelectorAll('a,button,.service-card,.contact-item,.tab-btn,.brand-item,.a-stat,.services-carousel-item').forEach(el => {
     el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
   });
@@ -1671,7 +1366,77 @@
       });
     });
   }
+
+  // ===== CARRUSEL DE SERVICIOS CON JS (SIN BUGS) =====
+  const carouselData = [
+    { img: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=400&q=80', title: 'Domótica', subtitle: 'Casas Inteligentes' },
+    { img: 'https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=400&q=80', title: 'Reparación', subtitle: 'PC & Laptops' },
+    { img: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=80', title: 'Servicio de Nube', subtitle: 'Cloud Computing' },
+    { img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&q=80', title: 'Agentes IA', subtitle: 'Inteligencia Artificial' },
+    { img: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80', title: 'Diseño Web', subtitle: 'Desarrollo Digital' },
+    { img: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&q=80', title: 'Alarmas', subtitle: 'Seguridad Perimetral' },
+    { img: 'https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=400&q=80', title: 'Cámaras', subtitle: 'Videovigilancia' },
+    { img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&q=80', title: 'Cableado', subtitle: 'Estructurado' },
+    { img: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=400&q=80', title: 'Medición', subtitle: 'Energética & Vibración' }
+  ];
+
+  const track = document.getElementById('carouselTrack');
+  const container = document.getElementById('servicesCarousel');
+  
+  // Crear tarjetas (3 copias para loop perfecto)
+  function createCard(item) {
+    const div = document.createElement('div');
+    div.className = 'services-carousel-item';
+    div.innerHTML = `
+      <img src="${item.img}" alt="${item.title}" loading="lazy">
+      <div class="services-carousel-overlay">
+        <div class="services-carousel-title">${item.title}</div>
+        <div class="services-carousel-subtitle">${item.subtitle}</div>
+      </div>
+    `;
+    return div;
+  }
+  
+  // Agregar 3 copias para loop infinito suave
+  for (let copy = 0; copy < 3; copy++) {
+    carouselData.forEach(item => {
+      track.appendChild(createCard(item));
+    });
+  }
+
+  // Animación del carrusel con JS
+  let carouselOffset = 0;
+  let isPaused = false;
+  const speed = 0.5; // píxeles por frame
+  
+  container.addEventListener('mouseenter', () => isPaused = true);
+  container.addEventListener('mouseleave', () => isPaused = false);
+  container.addEventListener('touchstart', () => isPaused = true, {passive: true});
+  container.addEventListener('touchend', () => isPaused = false, {passive: true});
+  
+  function animateCarousel() {
+    if (!isPaused) {
+      carouselOffset += speed;
+      
+      // Calcular ancho de un set completo
+      const firstItem = track.querySelector('.services-carousel-item');
+      if (firstItem) {
+        const itemWidth = firstItem.offsetWidth + 24; // width + gap
+        const setWidth = itemWidth * carouselData.length;
+        
+        // Reset cuando llega al final del primer set
+        if (carouselOffset >= setWidth) {
+          carouselOffset = 0;
+        }
+      }
+      
+      track.style.transform = `translateX(-${carouselOffset}px)`;
+    }
+    requestAnimationFrame(animateCarousel);
+  }
+  animateCarousel();
 </script>
 </body>
 </html>
+
 
